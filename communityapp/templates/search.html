@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+	{% if messages %}
+	<ul class="messages">
+		{% for k in messages %}
+		<li style="color: red"> <h1>{{ k }}</h1></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div> <br>
+
+<section class="container">
+<div style="color: black">
+		{% if smatch %}
+			{% for k in smatch %}
+			
+    <div class="row">
+      <div class="col-md-8">
+			 <div class=" mt-2">
+         
+    
+       <div class="communityborder relatedbgcolor">
+       <a href=""><p class="relatedquestion">{{ k.question }}</p></a>
+       
+
+       <div class="row smallhead">
+        <div class="col">
+          Asked by <span class="namecolor">{{ k.user }}</span>
+        </div>
+         <div class="col">
+          Category: <span class="namecolor">{{ k.category }}</span>
+        </div>
+         <div class="col">
+          Views: 4
+        </div>
+         <div class="col">
+          1 Answer
+        </div>
+       </div>
+     </div>
+     
+
+     </div>
+     </div>
+ </div>
+{% endfor %}
+{% endif %}
+
+      
+</div>
+</section>
+
+{% endblock %}

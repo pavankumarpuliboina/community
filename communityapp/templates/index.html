@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for i in category %}
+<a href="{% url 'communityapp:detail' i.slug %}"><h1>{{ i.category }}</h1></a>
+{% endfor %}
+
+{% endblock %}

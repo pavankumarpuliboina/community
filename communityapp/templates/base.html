@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community main</title>
+  <link rel="stylesheet" href="{% static 'sass/community.css' %}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100;200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+ 
+
+    <section class="container mt-5 communitybread">
+
+    <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'communityapp:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'communityapp:home' %}">Community</a></li>
+<!--      <li class="breadcrumb-item"><a href="#">Python</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">Trending Question in</li> -->
+
+  </ol>
+</nav>
+  </section>
+
+{% block content %}
+
+{% endblock %}
+
+
+
+
+
+
+</html>

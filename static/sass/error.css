@@ -1,0 +1,51 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 220px;
+}
+
+.error
+{
+  color: #a8abb0;
+  font-size: 30px;
+}
+.errormsg
+{
+font-size: 45px;
+color: #334096;
+}
+
+p {
+  font-size: 15px;
+  font-family: "Sora", sans-serif;
+  color: black;
+}
+
+.allcoursebtn
+{
+    font-family: "Sora", sans-serif;
+    font-weight: bold !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: #334096;
+    color: white;
+}
+
+
+.mainerror
+{
+ padding-top: 180px;
+}
+
+@media (max-width: 767px)
+{
+  .error
+{
+  color: #a8abb0;
+  font-size: 20px;
+}
+.errormsg
+{
+font-size: 25px;
+color: #334096;
+}
+}
