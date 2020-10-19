@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+
+
 <body>
 
   <section class="container">
@@ -9,56 +12,53 @@
         <div class="">
         <div class="col">
       
-      </div> 
-      <h1 class="communityhead pt-3">Trending Questions in CodeGnan Community </h1>    
+
+      </div>
+      <h1 class="communityhead pt-3">Trending Questions in {{ filtercategory.category }}</h1>
       </div>
      
+
+<!-- Question -->
+
+         
       <div class=" mt-2">
-
-        
-            {% for questions in question %}
-
+    {% for questions in question_list %}
        <div class="communityborder relatedbgcolor">
-        <a href="{% url 'communityapp:question-detail' questions.slug %}"><p class="relatedquestion">{{ questions.question }}</p></a>
+       <p class="relatedquestion">{{questions.question}}</p>
        <div class="row smallhead">
         <div class="col">
-          Answered by <span class="namecolor">{{ questions.user }}</span>
+          Asked by <span class="namecolor">Sairam</span>
         </div>
          <div class="col">
-          Category: <span class="namecolor">{{ questions.category }}</span>
+          Category: <span class="namecolor">Data Science</span>
         </div>
          <div class="col">
           Views: 4
         </div>
          <div class="col">
           1 Answer
-          </div>
+        </div>
        </div>
      </div>
+          {% endfor %}
+     </div>
 
-       {% endfor %}
-           
 
-      </div>
 
 
      <div class="mt-5 mb-5 paginationpadding">
 
-         <nav aria-label="Page navigation example">
+     <nav aria-label="Page navigation example">
   <ul class="pagination">
-    {% if page_obj.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-    {% endif %}
-    {% for num in page_obj.paginator.page_range %}
-    {% if page_obj.number == num %}
-    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-    {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-    {% endif %}
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item"><a class="page-link" href="#">6</a></li>
+            <li class="page-item"><a class="page-link" href="#">7</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
   </ul>
 </nav>
 
@@ -76,13 +76,14 @@
           </div>
         </form>
       <a href="#"><button class="btn questionbtnbig btn-block my-4 p-3">Ask us a question</button></a> 
-       
+
+
 <div class="mt-4">
  <h2 class="communitysidehead text-uppercase">Categories</h2>
  
- 
+
  <ul class="communitycategories catname pt-3">
-  {% for categorys in category %}
+   {% for categorys in category %}
     <a href="{% url 'communityapp:category-detail' categorys.slug %}"><li> {{ categorys.category }}<span class="badge badgenumber">89</span></li></a>
       {% endfor %}
   </ul>
@@ -101,5 +102,4 @@
 
  
 </body>
-
 {% endblock %}

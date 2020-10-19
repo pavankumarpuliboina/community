@@ -7,69 +7,100 @@ from django.db.models import Q
 from django.contrib import messages
 from . forms import AnswerForm,QuestionForm
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 # Create your views here.
-def home(request):
+
+def index(request):
 	category = Category.objects.all()
-	return render(request, 'index.html', {'category':category})
+	question = Question.objects.all()[::-1]
+	#filtercategory = Category.objects.get(slug=slug)
+	#separatecategory = Category.objects.filter(slug = slug)
 
-def index(request,slug):
-	categorys = Category.objects.all()
-	category = Category.objects.get(slug=slug)
-	separatecategory = Category.objects.filter(slug = slug)
-
-	question_list = category.question_set.all()
-	paginator = Paginator(question_list, 5)
+	# question_list = categorys.question_set.all()
+	paginator = Paginator(question, 5)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 
-	form = QuestionForm(request.POST)
-	if request.method == 'POST':
-		if form.is_valid():
-			question = request.POST['question']
-			description = request.POST['description']
-			form.instance.category = category
-			form = form.save()
-			return HttpResponseRedirect(reverse('communityapp:detail', kwargs={'slug': slug}))
-		else:
-			form = QuestionForm()
+	# form = QuestionForm()
+	# if request.method == 'POST':
+	# 	form = QuestionForm(request.POST)
+	# 	if form.is_valid():
+	# 		question = request.POST['question']
+	# 		description = request.POST['description']
+	# 		form.instance.category = category
+	# 		form = form.save()
+	# 		return HttpResponseRedirect(reverse('communityapp:detail', kwargs={'slug': slug}))
+	# 	else:
+	# 		form = QuestionForm()
 
-	return render(request, 'community-main.html', {'category':category, 'categorys':categorys, 'separatecategory':separatecategory, 'page_obj':page_obj, 'form':form})
+	return render(request, 'community-main.html', { 'category':category, 'question':question, 'page_obj':page_obj })
 
 
-
-
-def search(request):
-	if request.method == 'POST':
-		findingquestion = request.POST['findquestion']
-
-		if findingquestion:
-			match = Question.objects.filter(Q(question__icontains=findingquestion))
-			if match:
-				return render(request, 'search.html', {'smatch':match})
-			else:
-				messages.error(request, 'Result Not Found')
-		else:
-			return HttpResponseRedirect('/search/')
-
-	return render(request, 'search.html')
+def categorydetail(request,slug):
+	category = Category.objects.all()
+	filtercategory = Category.objects.get(slug = slug)
+	question_list = filtercategory.question_set.all()[::-1]
+	return render(request, 'category-filter.html',{'question_list':question_list, 'filtercategory':filtercategory, 'category':category})
 
 
 def questiondetail(request,slug):
 	question = Question.objects.get(slug = slug)
 	answers = Answer.objects.filter(question = question)
 	q = get_object_or_404(Question,slug = slug)
-	answerform = AnswerForm(request.POST)
-	if request.method == 'POST':
-		if answerform.is_valid():
-			answer = answerform.save(commit = False)
-			answer.question = q
-			answer.user = request.user
-			answer.save()
-			return redirect('communityapp:question-detail',slug = q.slug)
-		else:
-			answerform = AnswerForm()
-	return render(request, 'community.html', {'question':question, 'answers':answers, 'answerform':answerform})
+	# answerform = AnswerForm(request.POST)
+	# if request.method == 'POST':
+	# 	if answerform.is_valid():
+	# 		answer = answerform.save(commit = False)
+	# 		answer.question = q
+	# 		answer.user = request.user
+	# 		answer.save()
+	# 		return redirect('communityapp:question-detail',slug = q.slug)
+	# 	else:
+	# 		answerform = AnswerForm()
+	return render(request, 'community.html', {'question':question, 'answers':answers})
+
+
+
+# def search(request):
+# 	if request.method == 'POST':
+# 		findingquestion = request.POST['findquestion']
+
+# 		if findingquestion:
+# 			match = Question.objects.filter(Q(question__icontains=findingquestion))
+# 			if match:
+# 				return render(request, 'search.html', {'smatch':match})
+# 			else:
+# 				messages.error(request, 'Result Not Found')
+# 		else:
+# 			return HttpResponseRedirect('/search/')
+
+# 	return render(request, 'search.html')
+
+
+def upvote(request):
+	if request.method == "GET":
+		uv = request.GET.get('uo',None)
+		uo = Question.objects.get(id=uv)
+		uo.upvote = uo.upvote+1
+		uo.save()
+		data = {'uo': uo.upvote}
+	return JsonResponse(data)
+
+def downvote(request):
+	if request.method == "GET":
+		dv = request.GET.get('dov',None)
+		dov = Question.objects.get(id=dv)
+		dov.downvote = dov.downvote-1
+		dov.save()
+		data = {'dov': dov.downvote}
+		print(data)
+	return JsonResponse(data)
+
+
+
+		
+
 
 
 
