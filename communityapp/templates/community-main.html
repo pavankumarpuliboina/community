@@ -16,28 +16,29 @@
       <div class=" mt-2">
 
         
-            {% for questions in question %}
+            {% for i in question %}
 
        <div class="communityborder relatedbgcolor">
-        <a href="{% url 'communityapp:question-detail' questions.slug %}"><p class="relatedquestion">{{ questions.question }}</p></a>
+        <a href="{% url 'communityapp:question-detail' i.slug %}"><p class="relatedquestion">{{ i.question }}</p></a>
        <div class="row smallhead">
         <div class="col">
-          Answered by <span class="namecolor">{{ questions.user }}</span>
+          Asked by <span class="namecolor">{{ i.user }}</span>
         </div>
          <div class="col">
-          Category: <span class="namecolor">{{ questions.category }}</span>
+          Category: <span class="namecolor">{{ i.category }}</span>
         </div>
          <div class="col">
           Views: 4
         </div>
          <div class="col">
-          1 Answer
+          {{ i.answer_set.all.count }} Answer
           </div>
        </div>
      </div>
 
+
        {% endfor %}
-           
+          
 
       </div>
 
@@ -63,7 +64,11 @@
 </nav>
 
 </div>
+
+
 </div>
+
+
       <div class="col-md-4">
        <form action="">
           <div class="input-group mt-5 mt-md-0">
@@ -82,23 +87,17 @@
  
  
  <ul class="communitycategories catname pt-3">
-  {% for categorys in category %}
-    <a href="{% url 'communityapp:category-detail' categorys.slug %}"><li> {{ categorys.category }}<span class="badge badgenumber">89</span></li></a>
+  {% for i in category %}
+    <a href="{% url 'communityapp:category-detail' i.slug %}"><li> {{ i.category }}<span class="badge badgenumber">{{ i.question_set.all.count }}</span></li></a>
       {% endfor %}
   </ul>
 
  
     </div>
   </div>
-
-  </section>
-
-  
 </div>
 
-
-
-
+  </section>
  
 </body>
 

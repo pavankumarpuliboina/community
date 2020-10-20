@@ -22,21 +22,21 @@
 
          
       <div class=" mt-2">
-    {% for questions in question_list %}
+    {% for i in question_list %}
        <div class="communityborder relatedbgcolor">
-       <p class="relatedquestion">{{questions.question}}</p>
+       <a href="{% url 'communityapp:question-detail' i.slug %}"><p class="relatedquestion">{{i.question}}</p></a>
        <div class="row smallhead">
         <div class="col">
-          Asked by <span class="namecolor">Sairam</span>
+          Asked by <span class="namecolor">{{ i.user.username }}</span>
         </div>
          <div class="col">
-          Category: <span class="namecolor">Data Science</span>
+          Category: <span class="namecolor">{{ i.category }}</span>
         </div>
          <div class="col">
           Views: 4
         </div>
          <div class="col">
-          1 Answer
+          {{ i.answer_set.all.count }} Answer
         </div>
        </div>
      </div>
@@ -83,8 +83,8 @@
  
 
  <ul class="communitycategories catname pt-3">
-   {% for categorys in category %}
-    <a href="{% url 'communityapp:category-detail' categorys.slug %}"><li> {{ categorys.category }}<span class="badge badgenumber">89</span></li></a>
+   {% for i in category %}
+    <a href="{% url 'communityapp:category-detail' i.slug %}"><li> {{ i.category }}<span class="badge badgenumber">{{ i.question_set.all.count }}</span></li></a>
       {% endfor %}
   </ul>
 
@@ -95,7 +95,7 @@
   </section>
 
   
-</div>
+
 
 
 
